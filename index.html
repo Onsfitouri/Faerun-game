@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faërun Battle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="welcome-message">Welcome to Faërun game!</div>
+    <div id="game-container">
+        
+        <div id="control-panel-blue" class="control-panel">
+            <button onclick="trainWarrior('Blue', 'Dwarf')">Train Dwarf for Blue</button>
+            <button onclick="trainWarrior('Blue', 'Elf')">Train Elf for Blue</button>
+            <button onclick="trainWarrior('Blue', 'DwarfChief')">Train Dwarf Chief for Blue</button>
+            <button onclick="trainWarrior('Blue', 'ElfChief')">Train Elf Chief for Blue</button>
+            <ul id="blue-trained-warriors" class="trained-warriors"></ul>
+        </div>
+        <div id="castle1" class="castle"><img src="blue-castle.jpg" alt="blue castle" width="100" height="100"></div>
+        <div id="grid">
+            <!-- Grid cells will be dynamically generated here -->
+        </div>
+        <div id="castle2" class="castle"><img src="red-castle.jpg" alt="red castle" width="100" height="100"></div>
+        <div id="control-panel-red" class="control-panel">
+            <button onclick="trainWarrior('Red', 'Dwarf')">Train Dwarf for Red</button>
+            <button onclick="trainWarrior('Red', 'Elf')">Train Elf for Red</button>
+            <button onclick="trainWarrior('Red', 'DwarfChief')">Train Dwarf Chief for Red</button>
+            <button onclick="trainWarrior('Red', 'ElfChief')">Train Elf Chief for Red</button>
+            <ul id="red-trained-warriors" class="trained-warriors"></ul>
+        </div>
+    </div>
+    <button id="start-button" onclick="startGame()">Start Game</button>
+    
+    <div id="game-result"></div> 
+    <audio id="start-game-audio" src="C:\Users\DELL\Downloads\jeuxx\jeuxx\audio\battle-ship-111902.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
