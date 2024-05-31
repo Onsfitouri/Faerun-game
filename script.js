@@ -262,13 +262,13 @@ class Game {
                 const gameResultElement = document.getElementById('game-result');
                 gameResultElement.innerText = 'Red Castle Wins! Game Over.';
                 gameResultElement.style.display = 'block';
-                console.log("Red Castle Wins! Game Over.");
+                console.log("Red Castle Wins! Game Over."); 
             }
         }, 1000);
     }
 }
 
-const game = new Game();
+
 
 function trainWarrior(color, type) {
     if (color === 'Blue') {
@@ -281,13 +281,12 @@ function trainWarrior(color, type) {
 function startGame() {
     game.startGame();
     console.log("start game ")
-    // Change the background image
     changeBackgroundImage('1.jpg');
-    // Play the audio
     var audio = document.getElementById('start-game-audio');
     audio.play();
 }
 function changeBackgroundImage(imageUrl) {
     document.body.style.backgroundImage = `url(${imageUrl})`;
-    document.body.style.backgroundSize = 'cover'; // Ensure the background covers the whole page
+    document.body.style.backgroundSize = 'cover'; 
 }
+const game = new Game();
