@@ -111,13 +111,6 @@ span {
 }
 /* Adjust the size of warrior images */
 .warrior {
-    width: 40px;
-    height: 40px;
-}
-#restart-button {
-    display: none; /* Hidden by default */
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    width: 100px;
+    height: 100px;
 }

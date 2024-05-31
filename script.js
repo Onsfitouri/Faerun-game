@@ -11,6 +11,7 @@ class Warrior {
         for (let i = 0; i < this.force; i++) {
             damage += Math.floor(Math.random() * 3) + 1; // 3-faced die roll
         }
+        console.log(`${this.type} attacks with ${damage} damage`); // Log damage
         return damage;
     }
 
@@ -107,6 +108,7 @@ class Castle {
             const imageElement = document.createElement('img');
             imageElement.src = warrior.imageSrc;
             imageElement.alt = warrior.type;
+            imageElement.classList.add('warrior');
             listItem.appendChild(imageElement);
             listElement.appendChild(listItem);
         });
@@ -162,7 +164,9 @@ class Game {
     moveWarriors() {
         // Move blue warriors
         for (let i = this.gridSize - 2; i >= 0; i--) {
+            console.log(this.gridSize)
             if (this.grid[i + 1].red.length === 0) {
+                console.log(this.grid[i])
                 this.grid[i + 1].blue = this.grid[i].blue;
                 this.grid[i].blue = [];
             }
@@ -170,16 +174,22 @@ class Game {
         // Move red warriors
         for (let i = 1; i < this.gridSize; i++) {
             if (this.grid[i - 1].blue.length === 0) {
+                console.log(this.grid[i])
                 this.grid[i - 1].red = this.grid[i].red;
                 this.grid[i].red = [];
             }
         }
     }
     
+    
+    
 
     resolveCombat() {
+        console.log("Resolving combat...");
+    
         for (let i = 0; i < this.gridSize; i++) {
             if (this.grid[i].blue.length > 0 && this.grid[i].red.length > 0) {
+                console.log(`Combat at cell ${i}`);
                 const blueWarriors = this.grid[i].blue;
                 const redWarriors = this.grid[i].red;
                 let blueIndex = 0;
@@ -191,68 +201,71 @@ class Game {
                     const redDamage = redWarrior.attack();
                     redWarrior.takeDamage(blueDamage);
                     blueWarrior.takeDamage(redDamage);
+                    console.log(`${blueWarrior.type} HP: ${blueWarrior.hp}, ${redWarrior.type} HP: ${redWarrior.hp}`);
                     if (blueWarrior.hp <= 0) {
                         blueWarriors.splice(blueIndex, 1); // Remove dead blue warrior
-                        console.log("blue worrior removed")
+                        console.log("Blue warrior removed");
                     } else {
                         blueIndex++;
                     }
                     if (redWarrior.hp <= 0) {
                         redWarriors.splice(redIndex, 1); // Remove dead red warrior
-                        console.log("red worrior removed")
+                        console.log("Red warrior removed");
                     } else {
                         redIndex++;
                     }
                 }
-            } 
+                console.log(`Post-combat cell ${i} state: ${this.grid[i].blue.length} blue, ${this.grid[i].red.length} red`);
+            }
         }
     }
+    
+    
 
     startGame() {
         // Place trained warriors on the grid before starting the game
-   for (let i = 0; i < this.blueCastle.warriors.length; i++) {
-       this.grid[0].blue.push(this.blueCastle.warriors[i]);
-   }
-   for (let i = 0; i < this.redCastle.warriors.length; i++) {
-       this.grid[this.gridSize - 1].red.push(this.redCastle.warriors[i]);
-   }
+        for (let i = 0; i < this.blueCastle.warriors.length; i++) {
+            this.grid[0].blue.push(this.blueCastle.warriors[i]);
+        }
+        for (let i = 0; i < this.redCastle.warriors.length; i++) {
+            this.grid[this.gridSize - 1].red.push(this.redCastle.warriors[i]);
+        }
 
-   // Log the initial positions of the warriors
-   console.log('Initial positions of warriors:');
-   console.log('Blue warriors:', this.grid[0].blue);
-   console.log('Red warriors:', this.grid[this.gridSize - 1].red);
-   
-       const intervalId = setInterval(() => {
-           this.blueCastle.regenerateResources();
-           this.redCastle.regenerateResources();
-           this.blueCastle.updateTrainedWarriorsList();
-           this.redCastle.updateTrainedWarriorsList();
-           this.updateGrid();
-           this.moveWarriors();
-           this.resolveCombat();
-           
+        // Log the initial positions of the warriors
+        console.log('Initial positions of warriors:');
+        console.log('Blue warriors:', this.grid[0].blue);
+        console.log('Red warriors:', this.grid[this.gridSize - 1].red);
 
-           // Check if a blue warrior reached the red castle
-           if (this.grid[this.gridSize - 1].red.length > 0) {
-               clearInterval(intervalId);
-               const gameResultElement = document.getElementById('game-result');
-               gameResultElement.innerText = 'Blue Castle Wins! Game Over.';
-               gameResultElement.style.display = 'block';
-               console.log("Blue Castle Wins! Game Over.")
-               
-           }
-           
-           // Check if a red warrior reached the blue castle
-           if (this.grid[0].blue.length > 0) {
-               clearInterval(intervalId);
-               const gameResultElement = document.getElementById('game-result');
-               gameResultElement.innerText = 'Red Castle Wins! Game Over.';
-               gameResultElement.style.display = 'block';
-               console.log("Red Castle Wins! Game Over.")
-           }
-       }, 1000);
-   }
-   
+        const intervalId = setInterval(() => {
+            this.blueCastle.regenerateResources();
+            this.redCastle.regenerateResources();
+            this.blueCastle.updateTrainedWarriorsList();
+            this.redCastle.updateTrainedWarriorsList();
+            this.updateGrid();
+            this.moveWarriors();
+            this.resolveCombat();
+
+            console.log(this.grid[this.gridSize - 1]);
+
+            // Check if a blue warrior reached the red castle
+            if (this.grid[this.gridSize - 1].blue.length > 0) {
+                clearInterval(intervalId);
+                const gameResultElement = document.getElementById('game-result');
+                gameResultElement.innerText = 'Blue Castle Wins! Game Over.';
+                gameResultElement.style.display = 'block';
+                console.log("Blue Castle Wins! Game Over.");
+            }
+
+            // Check if a red warrior reached the blue castle
+            if (this.grid[0].red.length > 0) {
+                clearInterval(intervalId);
+                const gameResultElement = document.getElementById('game-result');
+                gameResultElement.innerText = 'Red Castle Wins! Game Over.';
+                gameResultElement.style.display = 'block';
+                console.log("Red Castle Wins! Game Over.");
+            }
+        }, 1000);
+    }
 }
 
 const game = new Game();

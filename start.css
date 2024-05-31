@@ -1,0 +1,29 @@
+body {
+    background-image: url('22.avif');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.start-game-container {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 50px;
+    border-radius: 10px;
+    color: white;
+}
+
+.title {
+    font-size: 48px;
+    margin: 0;
+}
+
+.button {
+    font-size: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
